@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  background-color: black;
+  overflow: hidden;
+  position: relative;
+  transform: perspective(800px);
+  .slider {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 10%;
+    left: calc(50% - 100px);
+    transform-style: preserve-3d;
+    transform: rotateX(16deg) perspective(800px) translateZ(400px);
+    animation: autoRun 30s linear infinite;
+    .item {
+      position: absolute;
+      inset: 0 0 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 30px var(--color);
+      text-shadow: 0 0 30px white;
+      background-color: var(--color);
+      font-size: 5em;
+      color: aliceblue;
+      transform: rotateY(
+          calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+        )
+        translateZ(400px);
+    }
+  }
+  > .text {
+    width: 100%;
+    height: 20%;
+    background-image: radial-gradient(#ffffff3a, #000 60%);
+    transform: translateY(380%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    > span {
+      font-size: 80px;
+      font-weight: bold;
+      color: white;
+      transition: 0.3s;
+      position: relative;
+      &::before {
+        content: attr(data);
+        position: absolute;
+        color: rgb(0, 0, 0);
+        transform-origin: left;
+        transform: rotateY(40deg);
+        transition: 0.3s;
+      }
+      &:hover::before {
+        transform: rotateY(20deg);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@keyframes autoRun {
+  from {
+    transform: perspective(800px) rotateX(-16deg) rotateY(0deg);
+  }
+  to {
+    transform: perspective(800px) rotateX(-16deg) rotateY(360deg);
+  }
+}
